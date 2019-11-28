@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        video {
+            margin-left: calc((100vw - 768px)/2);
+            margin-top: calc((100vh - 432px)/2);
+
+        }
+
+
+        .theVid {
+            height: 200vh;
+            /*            position: fixed*/
+        }
+
+        video {
+
+            position: fixed
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="theVid">
+        <video src="video/theVideo.mp4" width="768" height="432"></video>
+    </div>
+
+
+    <script>
+        let vidPointer;
+        let scrollDistance;
+        let anormality = 16;
+        let vidLength;
+        window.addEventListener("DOMContentLoaded", runTheScript);
+
+        function runTheScript() {
+            console.log("runTheScript");
+            vidPointer = document.querySelector("video");
+            vidPointer.oncanplaythrough = loadFunc;
+
+
+        }
+
+        function loadFunc(evt) {
+            vidLength = vidPointer.duration;
+            console.log("vidLength", vidLength);
+
+            //            vidPointer.currentTime = 1;
+            // this.addEventListener("click",function(){this.play();})
+            window.addEventListener("scroll", scrollFunc);
+
+            //console.log("SCROLL TOP",document.querySelector(".theVid").scrollTop);
+            console.log("SCROLL HEIGHT", document.querySelector(".theVid").scrollHeight);
+            //            console.log("client HEIGHT",document.querySelector(".theVid").clientHeight);
+            console.log("WINDOW HEIGHT", window.innerHeight);
+            scrollDistance = document.querySelector(".theVid").scrollHeight - window.innerHeight + anormality;
+            console.log("scrollDistance", scrollDistance);
+        };
+
+        function scrollFunc() {
+
+            console.log("SCROLLY",window.scrollY/scrollDistance);
+            vidPointer.currentTime = window.scrollY/scrollDistance * vidLength;
+
+        }
+
+
+        // var limit = Math.max( document.body.scrollHeight, document.body.offsetHeight,
+        //          document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight );
+
+    </script>
+</body>
+
+</html>
